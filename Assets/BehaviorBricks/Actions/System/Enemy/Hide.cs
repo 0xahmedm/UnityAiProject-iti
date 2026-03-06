@@ -8,6 +8,9 @@ namespace BBUnity.Actions
     [Action("Enemy/Hide")]
     public class Hide : GOAction
     {
+        [InParam("nearSpotThreshold")]
+        public float nearSpotThreshold = 3f;
+
         private NavMeshAgent agent;
         private Animator anim;
         private Vector3 target;
@@ -34,8 +37,31 @@ namespace BBUnity.Actions
                 return;
             }
 
-            int rand = Random.Range(0, spots.Length);
-            target = spots[rand].position;
+            // Check if enemy is already near a hide spot
+            Transform nearestSpot = null;
+            float shortestDist = float.MaxValue;
+
+            foreach (Transform spot in spots)
+            {
+                float dist = Vector3.Distance(gameObject.transform.position, spot.position);
+                if (dist < shortestDist)
+                {
+                    shortestDist = dist;
+                    nearestSpot = spot;
+                }
+            }
+
+            // If already close enough, stay there
+            if (shortestDist <= nearSpotThreshold)
+            {
+                target = nearestSpot.position;
+            }
+            else
+            {
+                // Pick a random spot
+                int rand = Random.Range(0, spots.Length);
+                target = spots[rand].position;
+            }
 
             agent.speed = 4f;
             agent.SetDestination(target);
