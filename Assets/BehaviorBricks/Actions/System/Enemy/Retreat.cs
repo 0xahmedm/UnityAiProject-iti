@@ -38,7 +38,7 @@ namespace BBUnity.Actions
             int rand = Random.Range(0, spots.Length);
             target = spots[rand].position;
 
-            agent.speed = 4f;
+            agent.speed = 12f;
             agent.SetDestination(target);
 
             anim.SetBool("isRunning", true);

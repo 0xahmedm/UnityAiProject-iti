@@ -20,7 +20,7 @@ namespace BBUnity.Actions
             agent = gameObject.GetComponent<NavMeshAgent>();
             anim = gameObject.GetComponent<Animator>();
 
-            agent.speed = 6f;
+            agent.speed = 12f;
             anim.SetBool("isRunning", true);
             isAttacking = false;
         }
@@ -33,7 +33,7 @@ namespace BBUnity.Actions
 
                 float dist = Vector3.Distance(gameObject.transform.position, player.transform.position);
 
-                if (dist < 2f)
+                if (dist < 3f)
                 {
                     agent.isStopped = true;
                     anim.SetBool("isRunning", false);
