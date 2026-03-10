@@ -19,7 +19,8 @@ MonoBehaviour:
     <RepeatUntilFailed id=\"11\" />\r\n      </root>\r\n      <inputParams>\r\n       
     <inputValues>\r\n          <entry name=\"waitTime\" type=\"System.Single\" isBlackboard=\"False\"
     value=\"0\" />\r\n          <entry name=\"player\" type=\"UnityEngine.GameObject\"
-    isBlackboard=\"False\" />\r\n        </inputValues>\r\n      </inputParams>\r\n     
+    isBlackboard=\"False\" />\r\n          <entry name=\"nearSpotThreshold\" type=\"System.Single\"
+    isBlackboard=\"False\" value=\"0\" />\r\n        </inputValues>\r\n      </inputParams>\r\n     
     <outputParams />\r\n      <localParams />\r\n    </BehaviorTree>\r\n    <RepeatUntilFailed
     id=\"11\">\r\n      <child>\r\n        <SelectorNode id=\"1\" />\r\n      </child>\r\n     
     <inputParams />\r\n      <outputParams />\r\n      <localParams />\r\n    </RepeatUntilFailed>\r\n   
@@ -43,22 +44,22 @@ MonoBehaviour:
     <ActionNode id=\"5\" action=\"Enemy/Hide\">\r\n      <inputParams>\r\n       
     <inputValues>\r\n          <entry name=\"hideSpots\" type=\"UnityEngine.GameObject[]\"
     isBlackboard=\"True\" blackboard=\"hideSpots\" />\r\n          <entry name=\"nearSpotThreshold\"
-    type=\"System.Single\" isBlackboard=\"False\" value=\"0\" />\r\n        </inputValues>\r\n     
+    type=\"System.Single\" isBlackboard=\"True\" blackboard=\"nearSpotThreshold\"
+    />\r\n        </inputValues>\r\n      </inputParams>\r\n      <outputParams />\r\n     
+    <localParams />\r\n    </ActionNode>\r\n    <ActionNode id=\"7\" action=\"Enemy/Wait\">\r\n     
+    <inputParams>\r\n        <inputValues>\r\n          <entry name=\"waitTime\"
+    type=\"System.Single\" isBlackboard=\"True\" blackboard=\"waitTime\" />\r\n       
+    </inputValues>\r\n      </inputParams>\r\n      <outputParams />\r\n      <localParams
+    />\r\n    </ActionNode>\r\n    <ActionNode id=\"3\" action=\"Enemy/Ambush\">\r\n     
+    <inputParams>\r\n        <inputValues>\r\n          <entry name=\"player\" type=\"UnityEngine.GameObject\"
+    isBlackboard=\"True\" blackboard=\"player\" />\r\n        </inputValues>\r\n     
     </inputParams>\r\n      <outputParams />\r\n      <localParams />\r\n    </ActionNode>\r\n   
-    <ActionNode id=\"7\" action=\"Enemy/Wait\">\r\n      <inputParams>\r\n       
-    <inputValues>\r\n          <entry name=\"waitTime\" type=\"System.Single\" isBlackboard=\"True\"
-    blackboard=\"waitTime\" />\r\n        </inputValues>\r\n      </inputParams>\r\n     
-    <outputParams />\r\n      <localParams />\r\n    </ActionNode>\r\n    <ActionNode
-    id=\"3\" action=\"Enemy/Ambush\">\r\n      <inputParams>\r\n        <inputValues>\r\n         
-    <entry name=\"player\" type=\"UnityEngine.GameObject\" isBlackboard=\"True\"
-    blackboard=\"player\" />\r\n        </inputValues>\r\n      </inputParams>\r\n     
-    <outputParams />\r\n      <localParams />\r\n    </ActionNode>\r\n    <ActionNode
-    id=\"6\" action=\"Enemy/Retreat\">\r\n      <inputParams>\r\n        <inputValues>\r\n         
-    <entry name=\"hideSpots\" type=\"UnityEngine.GameObject[]\" isBlackboard=\"True\"
-    blackboard=\"hideSpots\" />\r\n        </inputValues>\r\n      </inputParams>\r\n     
-    <outputParams />\r\n      <localParams />\r\n    </ActionNode>\r\n    <ConditionEvalNode
-    id=\"0\" policy=\"ATOMIC_CHECK\" name=\"Enemy/IsDead\">\r\n      <inputParams
-    />\r\n      <outputParams />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n 
+    <ActionNode id=\"6\" action=\"Enemy/Retreat\">\r\n      <inputParams>\r\n       
+    <inputValues>\r\n          <entry name=\"hideSpots\" type=\"UnityEngine.GameObject[]\"
+    isBlackboard=\"True\" blackboard=\"hideSpots\" />\r\n        </inputValues>\r\n     
+    </inputParams>\r\n      <outputParams />\r\n      <localParams />\r\n    </ActionNode>\r\n   
+    <ConditionEvalNode id=\"0\" policy=\"ATOMIC_CHECK\" name=\"Enemy/IsDead\">\r\n     
+    <inputParams />\r\n      <outputParams />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n 
     </runtimeInfo>\r\n  <editorInfo>\r\n    <BehaviorTree id=\"0\" _name=\"Enemy3\"
     _description=\"\" _removeIfClosed=\"False\">\r\n      <_rootList>\r\n       
     <elem>\r\n          <SelectorNode id=\"1\" />\r\n        </elem>\r\n        <elem>\r\n         

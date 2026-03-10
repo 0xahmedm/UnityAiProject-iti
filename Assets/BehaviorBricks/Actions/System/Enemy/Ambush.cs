@@ -20,7 +20,7 @@ namespace BBUnity.Actions
             agent = gameObject.GetComponent<NavMeshAgent>();
             anim = gameObject.GetComponent<Animator>();
 
-            agent.speed = 12f;
+            agent.speed = 10f;
             anim.SetBool("isRunning", true);
             isAttacking = false;
         }
