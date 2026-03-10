@@ -85,6 +85,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5e2cb7aa74325ce48b5eeca2fa18eb00, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7684578731058351099}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5e2cb7aa74325ce48b5eeca2fa18eb00, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1832631027124698036}
   m_SourcePrefab: {fileID: 100100000, guid: 5e2cb7aa74325ce48b5eeca2fa18eb00, type: 3}
 --- !u!1 &7079712564261443273 stripped
 GameObject:
@@ -155,3 +158,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   speed: 40
   rb: {fileID: 2879928112254072384}
+--- !u!114 &1832631027124698036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7079712564261443273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be90f3f5b9e21314899324e8862c3094, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerBullet_7oksh
+  damage: 25
+  speed: 40
