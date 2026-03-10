@@ -7,7 +7,7 @@ public class RangedTacticalAI : MonoBehaviour
     public EnemyState currentState;
 
     [Header("References")]
-    public Transform player;
+    public Transform player; // Assign the Player Transform here in the Inspector
     public Transform[] shootingSpots;
     public GameObject projectilePrefab;
     public Transform firePoint;
@@ -19,14 +19,18 @@ public class RangedTacticalAI : MonoBehaviour
 
     private NavMeshAgent agent;
     private float stateTimer;
-    private Animator anim; // FIX: Added the missing definition
+    private Animator anim;
+    private bool isDead = false;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        
-        // FIX: Find the animator on the child object (the Mixamo model)
         anim = GetComponentInChildren<Animator>();
+
+        if (player == null)
+        {
+            Debug.LogError("Player reference is missing on " + gameObject.name);
+        }
 
         SwitchState(EnemyState.MoveToSpot);
         GoToNextSpot();
@@ -34,22 +38,16 @@ public class RangedTacticalAI : MonoBehaviour
 
     void Update()
     {
-        // 1. UPDATE ANIMATION SPEED ALWAYS
+        if (isDead) return;
+
+        // 1. Update Animations
         if (anim != null && agent != null)
         {
             float velocity = agent.velocity.magnitude;
             anim.SetFloat("Speed", velocity);
         }
 
-        // 2. CHECK FOR DEATH
-        if (Input.GetKeyDown(KeyCode.K)) health = 0;
-
-        if (health <= 0 && currentState != EnemyState.Die)
-        {
-            SwitchState(EnemyState.Die);
-        }
-
-        // 3. BRAIN LOGIC
+        // 2. Brain Logic
         switch (currentState)
         {
             case EnemyState.MoveToSpot:
@@ -85,6 +83,31 @@ public class RangedTacticalAI : MonoBehaviour
         }
     }
 
+    // This is the function you call when the player hits him
+    public void TakeDamage(float amount)
+    {
+        if (isDead) return;
+
+        health -= amount;
+        Debug.Log(gameObject.name + " took damage! Current Health: " + health);
+
+        if (health <= 0)
+        {
+            SwitchState(EnemyState.Die);
+        }
+    }
+
+    // Detecting physical bullets (Colliders)
+    private void OnTriggerEnter(Collider other)
+    {
+        // Make sure your bullet prefab has the tag "Bullet"
+        if (other.CompareTag("Bullet"))
+        {
+            TakeDamage(25f); // Damage value
+            Destroy(other.gameObject); // Destroy the bullet
+        }
+    }
+
     void SwitchState(EnemyState newState)
     {
         currentState = newState;
@@ -111,14 +134,23 @@ public class RangedTacticalAI : MonoBehaviour
         if (projectilePrefab && firePoint)
         {
             Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-            if (anim != null) anim.SetTrigger("Shoot"); // Trigger shooting animation
+            if (anim != null) anim.SetTrigger("Shoot");
         }
     }
 
     void HandleDeath()
     {
+        if (isDead) return;
+        isDead = true;
+
         agent.isStopped = true;
-        if (anim != null) anim.SetTrigger("Die"); // Trigger death animation
-        this.enabled = false;
+        agent.enabled = false; // Disable NavMesh to prevent weird sliding
+        
+        if (anim != null) anim.SetTrigger("Die");
+        
+        Debug.Log("Enemy has died.");
+        
+        // Optional: Destroy the enemy object after 5 seconds to clean up the scene
+        Destroy(gameObject, 5f);
     }
 }
