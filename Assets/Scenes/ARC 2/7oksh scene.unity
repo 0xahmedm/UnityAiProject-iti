@@ -568,9 +568,39 @@ MonoBehaviour:
   - {fileID: 240025998}
   projectilePrefab: {fileID: 968428664224079006, guid: a570e5e803ee61f44bb5720ad3036a4d, type: 3}
   firePoint: {fileID: 1387035518}
-  health: 100
   aimDuration: 2
   repositionDelay: 3
+--- !u!1 &754627011
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 754627012}
+  m_Layer: 0
+  m_Name: Spawn (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &754627012
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 754627011}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -24.8, y: 0, z: 2.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &819505813 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9f210e7c884b8d4468433cd86f4e017d, type: 3}
@@ -596,7 +626,6 @@ MonoBehaviour:
   - {fileID: 240025998}
   projectilePrefab: {fileID: 6152012165266093810, guid: ec0581e8aa214204b9f01884e77f846c, type: 3}
   firePoint: {fileID: 1387035518}
-  health: 100
   aimDuration: 2
   repositionDelay: 3
 --- !u!195 &819505815
@@ -666,6 +695,41 @@ CapsuleCollider:
   m_Height: 2.5987654
   m_Direction: 1
   m_Center: {x: 0, y: 0.7993827, z: 0}
+--- !u!114 &819505821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819505813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 824b69d0a578a1d4f8cde4264676c6ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDeathWaveSpawner
+  healthScript: {fileID: 819505822}
+  enemyPrefab: {fileID: 819505813}
+  spawnPoints:
+  - {fileID: 957615046}
+  - {fileID: 754627012}
+  numberOfWaves: 2
+  enemiesPerWave: 3
+  timeBetweenWaves: 10
+--- !u!114 &819505822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819505813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5cb31572c948846be7c7e7ecb57d2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 100
+  currentHealth: 0
+  isDead: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,7 +1010,44 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9f210e7c884b8d4468433cd86f4e017d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 819505819}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9f210e7c884b8d4468433cd86f4e017d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 819505821}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9f210e7c884b8d4468433cd86f4e017d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 819505822}
   m_SourcePrefab: {fileID: 100100000, guid: 9f210e7c884b8d4468433cd86f4e017d, type: 3}
+--- !u!1 &957615045
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 957615046}
+  m_Layer: 0
+  m_Name: Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &957615046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957615045}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7, y: 0, z: -16.81}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &988702613
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1492,3 +1593,5 @@ SceneRoots:
   - {fileID: 988702613}
   - {fileID: 343968480}
   - {fileID: 1122192466}
+  - {fileID: 957615046}
+  - {fileID: 754627012}
