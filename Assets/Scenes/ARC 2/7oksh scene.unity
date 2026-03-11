@@ -171,10 +171,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Survivor (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 968754316135838065, guid: 3dc52a5c0fac8b34fb6e077da72591cb, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 2834270661009020879, guid: 3dc52a5c0fac8b34fb6e077da72591cb, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 523709210}
+    - target: {fileID: 2834270661009020879, guid: 3dc52a5c0fac8b34fb6e077da72591cb, type: 3}
+      propertyPath: nextSceneName
+      value: Enemy3
+      objectReference: {fileID: 0}
     - target: {fileID: 2834270661009020879, guid: 3dc52a5c0fac8b34fb6e077da72591cb, type: 3}
       propertyPath: 'SpawnPoints.Array.data[0]'
       value: 
@@ -183,6 +191,18 @@ PrefabInstance:
       propertyPath: 'SpawnPoints.Array.data[1]'
       value: 
       objectReference: {fileID: 754627012}
+    - target: {fileID: 2834270661009020879, guid: 3dc52a5c0fac8b34fb6e077da72591cb, type: 3}
+      propertyPath: 'shootingSpots.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1845890145}
+    - target: {fileID: 2834270661009020879, guid: 3dc52a5c0fac8b34fb6e077da72591cb, type: 3}
+      propertyPath: 'shootingSpots.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1845890145}
+    - target: {fileID: 2834270661009020879, guid: 3dc52a5c0fac8b34fb6e077da72591cb, type: 3}
+      propertyPath: 'shootingSpots.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1845890145}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -636,10 +656,13 @@ MonoBehaviour:
   - {fileID: 863420492}
   - {fileID: 240025998}
   projectilePrefab: {fileID: 968428664224079006, guid: a570e5e803ee61f44bb5720ad3036a4d, type: 3}
-  firePoint: {fileID: 1387035518}
+  firePoint: {fileID: 0}
   health: 100
   aimDuration: 2
   repositionDelay: 3
+  enemyPrefab: {fileID: 0}
+  enemiesLeftToSpawn: 3
+  nextSceneName: 
 --- !u!1 &754627011
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,11 +694,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &819505813 stripped
+--- !u!1 &819505813
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9f210e7c884b8d4468433cd86f4e017d, type: 3}
-  m_PrefabInstance: {fileID: 945981818}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 819505823}
+  - component: {fileID: 819505819}
+  - component: {fileID: 819505818}
+  - component: {fileID: 819505814}
+  - component: {fileID: 819505815}
+  - component: {fileID: 819505821}
+  - component: {fileID: 819505822}
+  m_Layer: 0
+  m_Name: 
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!114 &819505814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -695,9 +735,13 @@ MonoBehaviour:
   - {fileID: 863420492}
   - {fileID: 240025998}
   projectilePrefab: {fileID: 6152012165266093810, guid: ec0581e8aa214204b9f01884e77f846c, type: 3}
-  firePoint: {fileID: 1387035518}
+  firePoint: {fileID: 0}
+  health: 100
   aimDuration: 2
   repositionDelay: 3
+  enemyPrefab: {fileID: 0}
+  enemiesLeftToSpawn: 3
+  nextSceneName: 
 --- !u!195 &819505815
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -800,6 +844,21 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   isDead: 0
+--- !u!4 &819505823
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819505813}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1314,12 +1373,6 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: d52aba8a9bc34d8439ef3361241b356d, type: 2}
   m_BuildHeightMesh: 0
---- !u!4 &1387035518 stripped
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1580762213
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1383,10 +1436,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3386453560464152374, guid: 8b21554685c8051439abb9aff443e228, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 814009710}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b21554685c8051439abb9aff443e228, type: 3}
 --- !u!20 &1580762214 stripped
 Camera:
@@ -1485,19 +1535,14 @@ Transform:
   - {fileID: 240025998}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1915771369 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 9f210e7c884b8d4468433cd86f4e017d, type: 3}
-  m_PrefabInstance: {fileID: 945981818}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 819505823}
   - {fileID: 1040458127}
   - {fileID: 1845890145}
   - {fileID: 1683171729}
-  - {fileID: 945981818}
   - {fileID: 1580762213}
   - {fileID: 988702613}
   - {fileID: 343968480}
