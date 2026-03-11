@@ -155,7 +155,7 @@ MonoBehaviour:
     colorParamsNames: []
     colorParamsLostDefaultValue: 
     objectParams:
-    - {fileID: 0}
+    - {fileID: 3386453560464152374, guid: 8b21554685c8051439abb9aff443e228, type: 3}
     objectParamsNames:
     - player
     objectParamsLostDefaultValue: 
@@ -202,3 +202,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::E3EnemyHealth
   health: 100
   isDead: 0
+  anim: {fileID: 0}
+  spawner: {fileID: 0}

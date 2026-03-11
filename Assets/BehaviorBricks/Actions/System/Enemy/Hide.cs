@@ -15,6 +15,8 @@ namespace BBUnity.Actions
         private Animator anim;
         private Vector3 target;
 
+        private HideSpot chosenSpot;
+
         public override void OnStart()
         {
             agent = gameObject.GetComponent<NavMeshAgent>();
@@ -24,43 +26,56 @@ namespace BBUnity.Actions
 
             if (hideSpotsParent == null)
             {
-                Debug.LogError("Could not find GameObject named 'HideSpots' in the scene!");
+                Debug.LogError("Could not find GameObject named 'HideSpots'!");
                 return;
             }
 
-            Transform[] allSpots = hideSpotsParent.GetComponentsInChildren<Transform>();
-            Transform[] spots = System.Array.FindAll(allSpots, t => t.CompareTag("HideSpot"));
+            HideSpot[] spots = hideSpotsParent.GetComponentsInChildren<HideSpot>();
 
             if (spots.Length == 0)
             {
-                Debug.LogError("No objects tagged 'HideSpot' found under HideSpots!");
+                Debug.LogError("No HideSpot scripts found!");
                 return;
             }
 
-            // Check if enemy is already near a hide spot
             Transform nearestSpot = null;
             float shortestDist = float.MaxValue;
 
-            foreach (Transform spot in spots)
+            foreach (HideSpot spot in spots)
             {
-                float dist = Vector3.Distance(gameObject.transform.position, spot.position);
-                if (dist < shortestDist)
+                float dist = Vector3.Distance(gameObject.transform.position, spot.transform.position);
+
+                if (dist < shortestDist && !spot.occupied)
                 {
                     shortestDist = dist;
-                    nearestSpot = spot;
+                    nearestSpot = spot.transform;
+                    chosenSpot = spot;
                 }
             }
 
-            // If already close enough, stay there
-            if (shortestDist <= nearSpotThreshold)
+            if (nearestSpot != null && shortestDist <= nearSpotThreshold)
             {
                 target = nearestSpot.position;
+                chosenSpot.occupied = true;
             }
             else
             {
-                // Pick a random spot
-                int rand = Random.Range(0, spots.Length);
-                target = spots[rand].position;
+                foreach (HideSpot spot in spots)
+                {
+                    if (!spot.occupied)
+                    {
+                        chosenSpot = spot;
+                        chosenSpot.occupied = true;
+                        target = spot.transform.position;
+                        break;
+                    }
+                }
+
+                if (chosenSpot == null)
+                {
+                    int rand = Random.Range(0, spots.Length);
+                    target = spots[rand].transform.position;
+                }
             }
 
             agent.speed = 10f;
@@ -72,7 +87,8 @@ namespace BBUnity.Actions
 
         public override TaskStatus OnUpdate()
         {
-            if (agent == null) return TaskStatus.FAILED;
+            if (agent == null)
+                return TaskStatus.FAILED;
 
             if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
             {

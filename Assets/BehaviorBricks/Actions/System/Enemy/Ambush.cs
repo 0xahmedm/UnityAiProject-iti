@@ -13,12 +13,14 @@ namespace BBUnity.Actions
 
         private NavMeshAgent agent;
         private Animator anim;
+        private E3EnemyHealth enemyHealth;
         private bool isAttacking = false;
 
         public override void OnStart()
         {
             agent = gameObject.GetComponent<NavMeshAgent>();
             anim = gameObject.GetComponent<Animator>();
+            enemyHealth = gameObject.GetComponent<E3EnemyHealth>();
 
             agent.speed = 10f;
             anim.SetBool("isRunning", true);
@@ -27,6 +29,15 @@ namespace BBUnity.Actions
 
         public override TaskStatus OnUpdate()
         {
+            // If enemy is dead, stop everything
+            if (enemyHealth != null && enemyHealth.isDead)
+            {
+                agent.isStopped = true;
+                anim.SetBool("isRunning", false);
+                anim.SetBool("isAttacking", false);
+                return TaskStatus.COMPLETED;
+            }
+
             if (!isAttacking)
             {
                 agent.SetDestination(player.transform.position);

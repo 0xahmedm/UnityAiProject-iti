@@ -1,6 +1,7 @@
 using Pada1.BBCore.Tasks;
 using Pada1.BBCore;
 using UnityEngine;
+using BBUnity.Actions;
 
 namespace BBUnity.Conditions
 {
@@ -13,7 +14,6 @@ namespace BBUnity.Conditions
         {
             if (health == null)
                 health = gameObject.GetComponent<E3EnemyHealth>();
-
             return health != null && health.isDead;
         }
     }

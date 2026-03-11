@@ -12,31 +12,39 @@ namespace BBUnity.Actions
         private Animator anim;
         private Vector3 target;
 
+        private HideSpot chosenSpot;
+
         public override void OnStart()
         {
             agent = gameObject.GetComponent<NavMeshAgent>();
             anim = gameObject.GetComponent<Animator>();
 
-            // Find the hideSpots parent directly by name in the scene
             GameObject hideSpotsParent = GameObject.Find("HideSpots");
 
             if (hideSpotsParent == null)
             {
-                Debug.LogError("Could not find GameObject named 'HideSpots' in the scene!");
+                Debug.LogError("Could not find HideSpots object!");
                 return;
             }
 
-            Transform[] allSpots = hideSpotsParent.GetComponentsInChildren<Transform>();
-            Transform[] spots = System.Array.FindAll(allSpots, t => t.CompareTag("HideSpot"));
+            HideSpot[] spots = hideSpotsParent.GetComponentsInChildren<HideSpot>();
 
-            if (spots.Length == 0)
+            foreach (HideSpot spot in spots)
             {
-                Debug.LogError("No objects tagged 'HideSpot' found under HideSpots!");
-                return;
+                if (!spot.occupied)
+                {
+                    chosenSpot = spot;
+                    chosenSpot.occupied = true;
+                    target = spot.transform.position;
+                    break;
+                }
             }
 
-            int rand = Random.Range(0, spots.Length);
-            target = spots[rand].position;
+            if (chosenSpot == null)
+            {
+                int rand = Random.Range(0, spots.Length);
+                target = spots[rand].transform.position;
+            }
 
             agent.speed = 10f;
             agent.SetDestination(target);
@@ -47,7 +55,8 @@ namespace BBUnity.Actions
 
         public override TaskStatus OnUpdate()
         {
-            if (agent == null) return TaskStatus.FAILED;
+            if (agent == null)
+                return TaskStatus.FAILED;
 
             if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
             {
